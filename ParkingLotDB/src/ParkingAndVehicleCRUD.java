@@ -82,106 +82,118 @@ public class ParkingAndVehicleCRUD {
         }
     }
 
-    // Placeholder method to add a Parking Lot and prepare an SQL string for later use
+    // Method to add a Parking Lot in the specified format
     private static void addParkingLot(Scanner scanner) {
         // Prompt user for details about the parking lot
         System.out.print("Enter parking lot name: ");
-        String name = "'" + scanner.next() + "'";  // Add single quotes around the string
+        String name = "'" + scanner.next() + "'";
         System.out.print("Enter street: ");
-        String street = "'" + scanner.next() + "'";  // Add single quotes around the string
+        String street = "'" + scanner.next() + "'";
         System.out.print("Enter city: ");
-        String city = "'" + scanner.next() + "'";  // Add single quotes around the string
+        String city = "'" + scanner.next() + "'";
         System.out.print("Enter state: ");
-        String state = "'" + scanner.next() + "'";  // Add single quotes around the string
+        String state = "'" + scanner.next() + "'";
         System.out.print("Enter zip code: ");
-        String zip = "'" + scanner.next() + "'";  // Add single quotes around the string
+        String zipCode = "'" + scanner.next() + "'";
         System.out.print("Enter capacity: ");
         int capacity = scanner.nextInt();
         
-        // Form the string that could be inserted into the database later
-        String insertQuery = "INSERT INTO parking_lots (name, street, city, state, zip_code, capacity) VALUES (" 
-                            + name + ", " + street + ", " + city + ", " + state + ", " + zip + ", " + capacity + ");";
+        // Store the formatted string for insertion
+        String formattedInsert = "insert(\"parking_lots\", [" + name + ", " + street + ", " + city + ", " + state + ", " + zipCode + ", " + capacity + "])";
         
-        // Store or print the SQL-like string literal for later use
-        System.out.println("Prepared SQL Query for Insertion: " + insertQuery);
-        
-        // You can later execute this query using a database connection
+        // Print or store the formatted string for later use
+        System.out.println("Formatted Insert Command: " + formattedInsert);
     }
 
-    // Placeholder method to read Parking Lots (Just prints a placeholder message for now)
-    private static void readParkingLots() {
-        System.out.println("Read Parking Lots: [This is a test placeholder]");
-    }
-
-    // Placeholder method to update a Parking Lot (Currently just displays user input)
+    // Method to update a Parking Lot
     private static void updateParkingLot(Scanner scanner) {
-        // Prompt user for details about the parking lot to update
         System.out.print("Enter parking lot ID to update: ");
         int id = scanner.nextInt();
-        System.out.print("Enter new name: ");
-        String name = "'" + scanner.next() + "'";  // Add single quotes around the string
-        System.out.print("Enter new street: ");
-        String street = "'" + scanner.next() + "'";  // Add single quotes around the string
-        System.out.print("Enter new city: ");
-        String city = "'" + scanner.next() + "'";  // Add single quotes around the string
-        System.out.print("Enter new state: ");
-        String state = "'" + scanner.next() + "'";  // Add single quotes around the string
-        System.out.print("Enter new zip code: ");
-        String zip = "'" + scanner.next() + "'";  // Add single quotes around the string
-        System.out.print("Enter new capacity: ");
-        int capacity = scanner.nextInt();
-        
-        // Form the SQL update query string
-        String updateQuery = "UPDATE parking_lots SET name = " + name + ", street = " + street + ", city = " + city + ", state = " + state + ", zip_code = " + zip + ", capacity = " + capacity + " WHERE parking_lot_id = " + id + ";";
-        
-        // Store or print the SQL-like string literal for later use
-        System.out.println("Prepared SQL Query for Update: " + updateQuery);
+
+        // Display a submenu to choose what field to update
+        System.out.println("What do you want to update?");
+        System.out.println("1. Name");
+        System.out.println("2. Street");
+        System.out.println("3. City");
+        System.out.println("4. State");
+        System.out.println("5. Zip Code");
+        System.out.println("6. Capacity");
+        System.out.print("Select an option: ");
+        int updateChoice = scanner.nextInt();
+
+        String formattedUpdate = null;
+
+        // Based on the user's choice, prompt for the new value and create the formatted update string
+        switch (updateChoice) {
+            case 1 -> {
+                System.out.print("Enter new name: ");
+                String name = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"parking_lots\", \"name\", " + name + ", \"parking_lot_id\", " + id + ")";
+            }
+            case 2 -> {
+                System.out.print("Enter new street: ");
+                String street = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"parking_lots\", \"street\", " + street + ", \"parking_lot_id\", " + id + ")";
+            }
+            case 3 -> {
+                System.out.print("Enter new city: ");
+                String city = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"parking_lots\", \"city\", " + city + ", \"parking_lot_id\", " + id + ")";
+            }
+            case 4 -> {
+                System.out.print("Enter new state: ");
+                String state = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"parking_lots\", \"state\", " + state + ", \"parking_lot_id\", " + id + ")";
+            }
+            case 5 -> {
+                System.out.print("Enter new zip code: ");
+                String zipCode = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"parking_lots\", \"zip_code\", " + zipCode + ", \"parking_lot_id\", " + id + ")";
+            }
+            case 6 -> {
+                System.out.print("Enter new capacity: ");
+                int capacity = scanner.nextInt();
+                formattedUpdate = "update(\"parking_lots\", \"capacity\", " + capacity + ", \"parking_lot_id\", " + id + ")";
+            }
+            default -> System.out.println("Invalid choice. No updates made.");
+        }
+
+        if (formattedUpdate != null) {
+            System.out.println("Formatted Update Command: " + formattedUpdate);
+        }
     }
 
-    // Placeholder method to delete a Parking Lot (Currently just displays the ID entered)
+    // Method to delete a Parking Lot
     private static void deleteParkingLot(Scanner scanner) {
-        // Prompt user for the parking lot ID to delete
         System.out.print("Enter parking lot ID to delete: ");
         int id = scanner.nextInt();
-        System.out.println("Parking lot with ID " + id + " deleted.");
+        String formattedDelete = "delete(\"parking_lots\", \"parking_lot_id\", " + id + ")";
+        System.out.println("Formatted Delete Command: " + formattedDelete);
     }
 
-    // Method to add a vehicle and store the result in a string literal for later database insertion
+    // Method to add a vehicle in the specified format
     private static void addVehicle(Scanner scanner) {
-        // Prompt user for details about the vehicle
         System.out.print("Enter vehicle license plate: ");
-        String licensePlate = "'" + scanner.next() + "'";  // Surround value with single quotes
+        String licensePlate = "'" + scanner.next() + "'";
         System.out.print("Enter state: ");
-        String state = "'" + scanner.next() + "'";  // Surround value with single quotes
+        String state = "'" + scanner.next() + "'";
         System.out.print("Enter color: ");
-        String color = "'" + scanner.next() + "'";  // Surround value with single quotes
+        String color = "'" + scanner.next() + "'";
         System.out.print("Enter make: ");
-        String make = "'" + scanner.next() + "'";  // Surround value with single quotes
+        String make = "'" + scanner.next() + "'";
         System.out.print("Enter model: ");
-        String model = "'" + scanner.next() + "'";  // Surround value with single quotes
+        String model = "'" + scanner.next() + "'";
         
-        // Form the string that could be inserted into the database later
-        String insertQuery = "INSERT INTO vehicles (license_plate, state, color, make, model) VALUES (" 
-                            + licensePlate + ", " + state + ", " + color + ", " + make + ", " + model + ");";
+        String formattedInsert = "insert(\"vehicles\", [" + licensePlate + ", " + state + ", " + color + ", " + make + ", " + model + "])";
         
-        // Store or print the SQL-like string literal for later use
-        System.out.println("Prepared SQL Query for Insertion: " + insertQuery);
-        
-        // You can later execute this query using a database connection
+        System.out.println("Formatted Insert Command: " + formattedInsert);
     }
 
-    // Placeholder method to read Vehicles (Just prints a placeholder message for now)
-    private static void readVehicles() {
-        System.out.println("Read Vehicles: [This is a test placeholder]");
-    }
-
-    // Method to update a vehicle and store the update string for later database execution
+    // Method to update a vehicle
     private static void updateVehicle(Scanner scanner) {
-        // Ask for the vehicle license plate first
         System.out.print("Enter vehicle license plate to update: ");
-        String licensePlate = "'" + scanner.next() + "'";  // Surround value with single quotes
+        String licensePlate = "'" + scanner.next() + "'";
 
-        // Display a submenu to choose what fiel2d to update
         System.out.println("What do you want to update?");
         System.out.println("1. State");
         System.out.println("2. Color");
@@ -190,44 +202,51 @@ public class ParkingAndVehicleCRUD {
         System.out.print("Select an option: ");
         int updateChoice = scanner.nextInt();
 
-        String updateQuery = null;
+        String formattedUpdate = null;
 
-        // Based on the user's choice, prompt for the new value and create the appropriate SQL update string
         switch (updateChoice) {
             case 1 -> {
                 System.out.print("Enter new state: ");
-                String state = "'" + scanner.next() + "'";  // Surround value with single quotes
-                updateQuery = "UPDATE vehicles SET state = " + state + " WHERE license_plate = " + licensePlate + ";";
+                String state = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"vehicles\", \"state\", " + state + ", \"license_plate\", " + licensePlate + ")";
             }
             case 2 -> {
                 System.out.print("Enter new color: ");
-                String color = "'" + scanner.next() + "'";  // Surround value with single quotes
-                updateQuery = "UPDATE vehicles SET color = " + color + " WHERE license_plate = " + licensePlate + ";";
+                String color = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"vehicles\", \"color\", " + color + ", \"license_plate\", " + licensePlate + ")";
             }
             case 3 -> {
                 System.out.print("Enter new make: ");
-                String make = "'" + scanner.next() + "'";  // Surround value with single quotes
-                updateQuery = "UPDATE vehicles SET make = " + make + " WHERE license_plate = " + licensePlate + ";";
+                String make = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"vehicles\", \"make\", " + make + ", \"license_plate\", " + licensePlate + ")";
             }
             case 4 -> {
                 System.out.print("Enter new model: ");
-                String model = "'" + scanner.next() + "'";  // Surround value with single quotes
-                updateQuery = "UPDATE vehicles SET model = " + model + " WHERE license_plate = " + licensePlate + ";";
+                String model = "'" + scanner.next() + "'";
+                formattedUpdate = "update(\"vehicles\", \"model\", " + model + ", \"license_plate\", " + licensePlate + ")";
             }
             default -> System.out.println("Invalid choice. No updates made.");
         }
 
-        // If a valid update operation was chosen, store or print the SQL-like string literal for later use
-        if (updateQuery != null) {
-            System.out.println("Prepared SQL Query for Update: " + updateQuery);
+        if (formattedUpdate != null) {
+            System.out.println("Formatted Update Command: " + formattedUpdate);
         }
     }
 
-    // Placeholder method to delete a Vehicle (Currently just displays the license plate entered)
+    // Method to delete a Vehicle
     private static void deleteVehicle(Scanner scanner) {
-        // Prompt user for the vehicle license plate to delete
         System.out.print("Enter vehicle license plate to delete: ");
-        String licensePlate = "'" + scanner.next() + "'";  // Surround value with single quotes
-        System.out.println("Vehicle with license plate " + licensePlate + " deleted.");
+        String licensePlate = "'" + scanner.next() + "'";
+        String formattedDelete = "delete(\"vehicles\", \"license_plate\", " + licensePlate + ")";
+        System.out.println("Formatted Delete Command: " + formattedDelete);
+    }
+
+    // Placeholder methods to read Parking Lots and Vehicles
+    private static void readParkingLots() {
+        System.out.println("Read Parking Lots: [This is a test placeholder]");
+    }
+
+    private static void readVehicles() {
+        System.out.println("Read Vehicles: [This is a test placeholder]");
     }
 }
