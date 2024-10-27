@@ -19,7 +19,8 @@ public class ParkingAndVehicleCRUD {
                 System.out.println("2. Manage Vehicles");
                 System.out.println("3. Exit");
                 System.out.print("Select an option: ");
-                int choice = scanner.nextInt();
+
+                int choice = scanner.nextInt(); // read user input
 
                 // Handle the user's choice for Parking Lot or Vehicle Management
                 switch (choice) {
@@ -31,10 +32,10 @@ public class ParkingAndVehicleCRUD {
                         db.disconnect();
                         return;
                     }
-                    default -> System.out.println("Invalid choice. Try again."); // Handle invalid input
+                    default -> throw new Exception(); // Handle invalid input
                 }
             } catch (Exception e) {
-                System.out.println("\nInvalid input. Please enter a number.");
+                System.out.println("\nInvalid input. Please enter a valid number.");
                 scanner.nextLine(); // Clear the invalid input
             }
         }
@@ -45,26 +46,32 @@ public class ParkingAndVehicleCRUD {
         // Loop for handling parking lot management until the user returns to the main
         // menu
         while (true) {
-            // Display the Parking Lot management menu
-            System.out.println("\n--- Parking Lot Management ---");
-            System.out.println("1. Add Parking Lot");
-            System.out.println("2. Read Parking Lots");
-            System.out.println("3. Update Parking Lot");
-            System.out.println("4. Delete Parking Lot");
-            System.out.println("5. Back to Main Menu");
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
+            try {
+                // Display the Parking Lot management menu
+                System.out.println("\n--- Parking Lot Management ---");
+                System.out.println("1. Add Parking Lot");
+                System.out.println("2. Read Parking Lots");
+                System.out.println("3. Update Parking Lot");
+                System.out.println("4. Delete Parking Lot");
+                System.out.println("5. Back to Main Menu");
+                System.out.print("Select an option: ");
 
-            // Handle the user's choice for different Parking Lot actions
-            switch (choice) {
-                case 1 -> addParkingLot(scanner); // Call method to add a parking lot
-                case 2 -> readParkingLots(); // Call method to read parking lots
-                case 3 -> updateParkingLot(scanner); // Call method to update a parking lot
-                case 4 -> deleteParkingLot(scanner); // Call method to delete a parking lot
-                case 5 -> {
-                    return;
-                } // Return to the main menu
-                default -> System.out.println("Invalid choice. Try again."); // Handle invalid input
+                int choice = scanner.nextInt(); // read user input
+
+                // Handle the user's choice for different Parking Lot actions
+                switch (choice) {
+                    case 1 -> addParkingLot(scanner); // Call method to add a parking lot
+                    case 2 -> readParkingLots(); // Call method to read parking lots
+                    case 3 -> updateParkingLot(scanner); // Call method to update a parking lot
+                    case 4 -> deleteParkingLot(scanner); // Call method to delete a parking lot
+                    case 5 -> {
+                        return;
+                    } // Return to the main menu
+                    default -> throw new Exception(); // Handle invalid input
+                }
+            } catch (Exception e) {
+                System.out.println("\nInvalid input. Please enter a valid number.");
+                scanner.nextLine(); // Clear the invalid input
             }
         }
     }
@@ -73,26 +80,31 @@ public class ParkingAndVehicleCRUD {
     private static void vehicleMenu(Scanner scanner) {
         // Loop for handling vehicle management until the user returns to the main menu
         while (true) {
-            // Display the Vehicle management menu
-            System.out.println("\n--- Vehicle Management ---");
-            System.out.println("1. Add Vehicle");
-            System.out.println("2. Read Vehicles");
-            System.out.println("3. Update Vehicle");
-            System.out.println("4. Delete Vehicle");
-            System.out.println("5. Back to Main Menu");
-            System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
+            try {
+                // Display the Vehicle management menu
+                System.out.println("\n--- Vehicle Management ---");
+                System.out.println("1. Add Vehicle");
+                System.out.println("2. Read Vehicles");
+                System.out.println("3. Update Vehicle");
+                System.out.println("4. Delete Vehicle");
+                System.out.println("5. Back to Main Menu");
+                System.out.print("Select an option: ");
+                int choice = scanner.nextInt();
 
-            // Handle the user's choice for different Vehicle actions
-            switch (choice) {
-                case 1 -> addVehicle(scanner); // Call method to add a vehicle
-                case 2 -> readVehicles(); // Call method to read vehicles
-                case 3 -> updateVehicle(scanner); // Call method to update a vehicle
-                case 4 -> deleteVehicle(scanner); // Call method to delete a vehicle
-                case 5 -> {
-                    return;
-                } // Return to the main menu
-                default -> System.out.println("Invalid choice. Try again."); // Handle invalid input
+                // Handle the user's choice for different Vehicle actions
+                switch (choice) {
+                    case 1 -> addVehicle(scanner); // Call method to add a vehicle
+                    case 2 -> readVehicles(); // Call method to read vehicles
+                    case 3 -> updateVehicle(scanner); // Call method to update a vehicle
+                    case 4 -> deleteVehicle(scanner); // Call method to delete a vehicle
+                    case 5 -> {
+                        return;
+                    } // Return to the main menu
+                    default -> throw new Exception(); // Handle invalid input
+                }
+            } catch (Exception e) {
+                System.out.println("\nInvalid input. Please enter a valid number.");
+                scanner.nextLine(); // Clear the invalid input
             }
         }
     }
