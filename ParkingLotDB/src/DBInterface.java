@@ -8,8 +8,8 @@ public class DBInterface {
     private Connection con;
     private Statement st;
 
-    public void connect(){
-        if(connected){
+    public void connect() {
+        if (connected) {
             System.out.println("Already connected to database!");
             return;
         }
@@ -23,8 +23,8 @@ public class DBInterface {
         }
     }
 
-    public void disconnect(){
-        if(!connected){
+    public void disconnect() {
+        if (!connected) {
             System.out.println("Not currently connected to database!");
             return;
         }
@@ -37,8 +37,8 @@ public class DBInterface {
         }
     }
 
-    public void insert(String table, String[] args){
-        if(!connected){
+    public void insert(String table, String[] args) {
+        if (!connected) {
             System.out.println("Database not connected!");
             return;
         }
@@ -51,68 +51,76 @@ public class DBInterface {
         }
     }
 
-    public ArrayList<String[]> readAllRows(String table, String[] cols){
-        if(!connected){
+    public ArrayList<String[]> readAllRows(String table, String[] cols) {
+        if (!connected) {
             System.out.println("Database not connected!");
             return null;
         }
         ArrayList<String[]> result = new ArrayList<>();
-        
-        ResultSet rs;
+
+        String query = "SELECT " + String.join(",", cols) + " FROM " + table + ";";
+
         try {
-            rs = st.executeQuery("select " + String.join(",",cols) + " from " + table + ";");
-            while(rs.next()){
+            ResultSet rs;
+
+            rs = st.executeQuery(query);
+            while (rs.next()) {
                 String[] rowData = new String[cols.length];
-                for(int i = 0; i < cols.length; i++){
-                    rowData[i] = rs.getString(i+1);
+                for (int i = 0; i < cols.length; i++) {
+                    rowData[i] = rs.getString(i + 1);
                 }
                 result.add(rowData);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.err.println("Error executing query: " + query);
             e.printStackTrace();
         }
         return result;
     }
 
-    public ArrayList<String[]> read(String table, String[] cols, String condAttr, String attrVal){
-        if(!connected){
+    public ArrayList<String[]> read(String table, String[] cols, String condAttr, String attrVal) {
+        if (!connected) {
             System.out.println("Database not connected!");
             return null;
         }
         ArrayList<String[]> result = new ArrayList<>();
-        ResultSet rs;
+        String query = "SELECT " + String.join(",", cols) + " FROM " + table + " WHERE " + condAttr + " = " + attrVal
+                + ";";
+
         try {
-            rs = st.executeQuery("select " + String.join(",",cols) + " from " + table + " where " + condAttr + " = " + attrVal + ";");
-            while(rs.next()){
+            ResultSet rs;
+
+            rs = st.executeQuery(query);
+            while (rs.next()) {
                 String[] rowData = new String[cols.length];
-                for(int i = 0; i < cols.length; i++){
-                    rowData[i] = rs.getString(i+1);
+                for (int i = 0; i < cols.length; i++) {
+                    rowData[i] = rs.getString(i + 1);
                 }
                 result.add(rowData);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.err.println("Error executing query: " + query);
             e.printStackTrace();
         }
-        return result;
+        return result.isEmpty() ? new ArrayList<>() : result; // Avoids returning null
     }
 
-    public void update(String table, String col, String newVal, String pk, String pkVal){
-        if(!connected){
+    public void update(String table, String col, String newVal, String pk, String pkVal) {
+        if (!connected) {
             System.out.println("Database not connected!");
             return;
         }
-        String update = "update " + table + " set " + col + " = " + newVal + " where " + pk + " = " + pkVal + ";";
+        String query = "UPDATE " + table + " SET " + col + " = " + newVal + " WHERE " + pk + " = " + pkVal + ";";
         try {
-            st.executeUpdate(update);
+            st.executeUpdate(query);
         } catch (SQLException e) {
+            System.err.println("Error executing update: " + query);
             e.printStackTrace();
         }
     }
 
-    public void delete(String table, String attr, String val){
-        if(!connected){
+    public void delete(String table, String attr, String val) {
+        if (!connected) {
             System.out.println("Database not connected!");
             return;
         }
