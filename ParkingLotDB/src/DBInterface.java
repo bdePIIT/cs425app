@@ -25,7 +25,6 @@ public class DBInterface {
 
     public void disconnect() {
         if (!connected) {
-            System.out.println("Not currently connected to database!");
             return;
         }
         try {
