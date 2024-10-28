@@ -91,19 +91,31 @@ def view_parking_lots(db):
         rows = db.cursor.fetchall()
 
         if rows:
-            print("\n=====================================")
-            print("          Parking Lots List          ")
-            print("=====================================")
-            print(f"{'ID':<5} {'Name':<20} {'City':<15} {'State':<7} {'Capacity':<10}")
-            print("-----------------------------------------------------------")
+            print(
+                "\n==================================================================================="
+            )
+            print(
+                "                              Parking Lots List                                    "
+            )
+            print(
+                "==================================================================================="
+            )
+            print(
+                f"{'ID':<5} {'Name':<20} {'Street':<20} {'City':<15} {'State':<7} {'ZIP':<7} {'Capacity':<10}"
+            )
+            print(
+                "-----------------------------------------------------------------------------------"
+            )
 
             for row in rows:
                 parking_lot_id, name, street, city, state, zip_code, capacity = row
                 print(
-                    f"{parking_lot_id:<5} {name:<20} {city:<15} {state:<7} {capacity:<10}"
+                    f"{parking_lot_id:<5} {name:<20} {street:<20} {city:<15} {state:<7} {zip_code:<7} {capacity:<10}"
                 )
 
-            print("=====================================")
+            print(
+                "==================================================================================="
+            )
         else:
             print("\nNo parking lots found in the database.")
 
