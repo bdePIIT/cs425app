@@ -850,7 +850,5 @@ def main():
         else:
             print("Invalid option, please try again.")
 
-
-# Example Usage
 if __name__ == "__main__":
     main()
